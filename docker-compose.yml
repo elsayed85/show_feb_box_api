@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: showbox-febbox-api
+    ports:
+      - "3000:3000" # Expose the app on port 3000
+    volumes:
+      - .:/usr/src/app # Mount the current directory into the container
+    environment:
+      - NODE_ENV=local
+    restart: always
