@@ -1,11 +1,12 @@
-// server.js
-
 import express from 'express';
 import ShowboxAPI from './ShowboxAPI.js';
 import FebboxAPI from './FebBoxApi.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.API_PORT || 3000;
 
 // Initialize APIs
 const showboxAPI = new ShowboxAPI();

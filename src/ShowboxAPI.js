@@ -1,8 +1,10 @@
 import CryptoJS from 'crypto-js';
 import { customAlphabet } from 'nanoid';
 import fetch from 'node-fetch';
+import dotenv from 'dotenv';
 
-// Configuration Constants
+dotenv.config();
+
 const CONFIG = {
     BASE_URL: 'https://mbpapi.shegu.net/api/api_client/index/',
     APP_KEY: 'moviebox',
@@ -10,7 +12,7 @@ const CONFIG = {
     IV: 'wEiphTn!',
     KEY: '123d6cedf626dy54233aa1w6',
     DEFAULTS: {
-        CHILD_MODE: '0',
+        CHILD_MODE: process.env.CHILD_MODE || '0',
         APP_VERSION: '11.5',
         LANG: 'en',
         PLATFORM: 'android',

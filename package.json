@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "jsdom": "^26.0.0",
     "nanoid": "^5.1.5",

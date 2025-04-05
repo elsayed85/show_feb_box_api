@@ -1,7 +1,10 @@
 import fetch from 'node-fetch';
 import { JSDOM } from 'jsdom';
+import dotenv from 'dotenv';
 
-const FEBBOX_UI_COOKIE = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3NDI0OTcyNTQsIm5iZiI6MTc0MjQ5NzI1NCwiZXhwIjoxNzczNjAxMjc0LCJkYXRhIjp7InVpZCI6MTg5MTg3LCJ0b2tlbiI6ImJkYzNiNjY3NDdkNmY1NDNmMGY2YzhjZjA5MDhjNmEwIn19.6nljeQlQ-bqVdm8wMVooQdj1J6ljpUhCx_58ruuL6M4';
+dotenv.config();
+
+const FEBBOX_UI_COOKIE = process.env.FEBBOX_UI_COOKIE;
 
 class FebboxAPI {
     constructor() {
