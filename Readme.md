@@ -21,8 +21,8 @@ This repository provides an integration between two APIs: **Showbox** and **Febb
 ### 1. Clone the repository
 
 ```bash
-git clone https://your-repository-url
-cd your-repository-directory
+git clone https://github.com/elsayed85/show_feb_box_api showbox
+cd showbox
 
 cp .env.example .env
 ```
