@@ -23,6 +23,8 @@ This repository provides an integration between two APIs: **Showbox** and **Febb
 ```bash
 git clone https://your-repository-url
 cd your-repository-directory
+
+cp .env.example .env
 ```
 
 ### 2. Install Dependencies
@@ -79,8 +81,28 @@ The **FebboxAPI** class interacts with the **Febbox** platform to retrieve file 
 Ensure to set the **Febbox UI Cookie** for authentication:
 
 ```js
-const FEBBOX_UI_COOKIE = 'your_ui_cookie_here';
+FEBBOX_UI_COOKIE='your_cookie_here'
 ```
+
+## How to Get Your Febbox UI Token
+
+Bring your own Febbox account to get the best streaming experience, including 4K quality, Dolby Atmos, and the fastest load times!
+
+To get your **UI token**:
+
+1. Visit [Febbox.com](https://www.febbox.com) and log in with Google (use a fresh account).
+2. Open **DevTools** in your browser or inspect the page.
+3. Go to the **Application** tab → **Cookies**.
+4. Look for the cookie named **"ui"**.
+5. Copy the **"ui"** cookie value.
+6. Close the tab, but **do NOT log out** to keep your token valid.
+
+**Important:**  
+- **Do not share** your UI token with others as it is tied to your account. Treat it as a sensitive credential.
+
+For more details on how to retrieve it, you can watch this guide:  
+[Febbox UI Token Guide](https://vimeo.com/1059834885/c3ab398d42)
+
 
 ---
 
