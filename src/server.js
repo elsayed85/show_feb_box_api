@@ -96,7 +96,7 @@ app.get('/api/febbox/id', async (req, res) => {
 // Get Febbox files
 app.get('/api/febbox/files', async (req, res) => {
     const { shareKey, parent_id = 0 } = req.query;
-    const cookie = req.headers['X-Auth-Cookie'] || NULL;
+    const cookie = req.headers['x-auth-cookie'];
     try {
         const files = await febboxAPI._setAuthCookie(cookie).getFileList(shareKey, parent_id);
         res.json(files);
@@ -108,7 +108,7 @@ app.get('/api/febbox/files', async (req, res) => {
 // Get download links
 app.get('/api/febbox/links', async (req, res) => {
     const { shareKey, fid } = req.query;
-    const cookie = req.headers['X-Auth-Cookie'];
+    const cookie = req.headers['x-auth-cookie'];
     try {
         const links = await febboxAPI._setAuthCookie(cookie).getLinks(shareKey, fid);
         res.json(links);
