@@ -94,9 +94,8 @@ app.get('/api/febbox/id', async (req, res) => {
 });
 
 // Get Febbox files
-app.get('/api/febbox/files/:shareKey', async (req, res) => {
-    const { shareKey } = req.params;
-    const { parent_id = 0 } = req.query;
+app.get('/api/febbox/files', async (req, res) => {
+    const { shareKey , parent_id = 0 } = req.query;
     try {
         const files = await febboxAPI.getFileList(shareKey, parent_id);
         res.json(files);
