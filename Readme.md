@@ -321,8 +321,22 @@ Fetch a list of files from a shared Febbox folder. Optionally, navigate subfolde
     ```
     http://localhost:3000/api/febbox/files/fNBTg8at?parent_id=2636635
     ```
+#### 6. **Autocomplete**
+Fetch autocomplete suggestions for a given title.
+- **Endpoint:**
+  ```
+  GET /api/autocomplete
+  ```
+- **Parameters:**
+  - `keyword`: The keyword to search for.
 
-#### 6. **Get Download Links for a File**
+- **Example:**
+  - Get autocomplete suggestions for "breaking":
+    ```
+    http://localhost:3000/api/autocomplete?keyword=breaking
+    ```
+
+#### 7. **Get Download Links for a File**
 Fetch download links for a specific file from Febbox.
 
 - **Endpoint:**

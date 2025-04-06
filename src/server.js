@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'; // Import cors package
 import ShowboxAPI from './ShowboxAPI.js';
 import FebboxAPI from './FebBoxApi.js';
 import dotenv from 'dotenv';
@@ -8,22 +9,50 @@ dotenv.config();
 const app = express();
 const port = process.env.API_PORT || 3000;
 
-// Initialize APIs
-const showboxAPI = new ShowboxAPI();
-const febboxAPI = new FebboxAPI();
+// Enable CORS for all origins
+app.use(cors());
+
+// OR manually set CORS headers if you don’t want to use `cors` package
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any domain
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allowed methods
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+
+    next();
+});
 
 // Middleware to handle JSON requests
 app.use(express.json());
 
-// Test endpoint to check if the API is up
+// Initialize APIs
+const showboxAPI = new ShowboxAPI();
+const febboxAPI = new FebboxAPI();
+
+// Test endpoint
 app.get('/', (req, res) => {
     res.send('Showbox and Febbox API is working!');
 });
 
+// Autocomplete endpoint
+app.get('/api/autocomplete', async (req, res) => {
+    const { keyword } = req.query;
+    try {
+        const results = await showboxAPI.getAutocomplete(keyword);
+        res.json(results);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Search endpoint
 app.get('/api/search/:type', async (req, res) => {
     const { type } = req.params || 'all';
     const { title, page = 1, pagelimit = 20 } = req.query;
-
     try {
         const results = await showboxAPI.search(title, type, page, pagelimit);
         res.json(results);
@@ -32,7 +61,7 @@ app.get('/api/search/:type', async (req, res) => {
     }
 });
 
-// Get movie details with custom parameters
+// Movie details
 app.get('/api/movie/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -43,7 +72,7 @@ app.get('/api/movie/:id', async (req, res) => {
     }
 });
 
-// Get show details with custom parameters
+// Show details
 app.get('/api/show/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -54,10 +83,9 @@ app.get('/api/show/:id', async (req, res) => {
     }
 });
 
-// Get FebBox ID for a movie or show
+// Get FebBox ID
 app.get('/api/febbox/id', async (req, res) => {
     const { id, type } = req.query;
-
     try {
         const febBoxId = await showboxAPI.getFebBoxId(id, type);
         res.json({ febBoxId });
@@ -66,11 +94,10 @@ app.get('/api/febbox/id', async (req, res) => {
     }
 });
 
-// Get file list from Febbox with customizable parameters
+// Get Febbox files
 app.get('/api/febbox/files/:shareKey', async (req, res) => {
     const { shareKey } = req.params;
     const { parent_id = 0 } = req.query;
-
     try {
         const files = await febboxAPI.getFileList(shareKey, parent_id);
         res.json(files);
@@ -79,10 +106,9 @@ app.get('/api/febbox/files/:shareKey', async (req, res) => {
     }
 });
 
-// Get download links for a file with customizable quality parameters
+// Get download links
 app.get('/api/febbox/links/:shareKey/:fid', async (req, res) => {
     const { shareKey, fid } = req.params;
-
     try {
         const links = await febboxAPI.getLinks(shareKey, fid);
         res.json(links);

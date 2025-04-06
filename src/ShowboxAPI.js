@@ -107,6 +107,12 @@ class ShowboxAPI {
         const data = await response.json();
         return data?.data?.link?.split('/').pop();
     }
+
+    async getAutocomplete(keyword , pagelimit = 5) {
+        return this.request('Autocomplate2', { keyword, pagelimit: pagelimit }).then(data => {
+            return data.data;
+        });
+    }
 }
 
 export default ShowboxAPI;
