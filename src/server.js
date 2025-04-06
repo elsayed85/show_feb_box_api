@@ -40,9 +40,9 @@ app.get('/', (req, res) => {
 
 // Autocomplete endpoint
 app.get('/api/autocomplete', async (req, res) => {
-    const { keyword } = req.query;
+    const { keyword , pagelimit } = req.query;
     try {
-        const results = await showboxAPI.getAutocomplete(keyword);
+        const results = await showboxAPI.getAutocomplete(keyword , pagelimit);
         res.json(results);
     } catch (error) {
         res.status(500).json({ error: error.message });
