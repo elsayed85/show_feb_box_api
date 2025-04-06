@@ -105,8 +105,8 @@ app.get('/api/febbox/files', async (req, res) => {
 });
 
 // Get download links
-app.get('/api/febbox/links/:shareKey/:fid', async (req, res) => {
-    const { shareKey, fid } = req.params;
+app.get('/api/febbox/links', async (req, res) => {
+    const { shareKey, fid } = req.query;
     try {
         const links = await febboxAPI.getLinks(shareKey, fid);
         res.json(links);
