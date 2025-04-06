@@ -50,9 +50,8 @@ app.get('/api/autocomplete', async (req, res) => {
 });
 
 // Search endpoint
-app.get('/api/search/:type', async (req, res) => {
-    const { type } = req.params || 'all';
-    const { title, page = 1, pagelimit = 20 } = req.query;
+app.get('/api/search', async (req, res) => {
+    const { type = 'all', title, page = 1, pagelimit = 20 } = req.query;
     try {
         const results = await showboxAPI.search(title, type, page, pagelimit);
         res.json(results);
