@@ -108,7 +108,7 @@ app.get('/api/febbox/files', async (req, res) => {
 // Get download links
 app.get('/api/febbox/links', async (req, res) => {
     const { shareKey, fid } = req.query;
-    const cookie = req.headers['X-Auth-Cookie'] || NULL;
+    const cookie = req.headers['X-Auth-Cookie'];
     try {
         const links = await febboxAPI._setAuthCookie(cookie).getLinks(shareKey, fid);
         res.json(links);
