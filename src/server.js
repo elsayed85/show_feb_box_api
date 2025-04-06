@@ -96,9 +96,9 @@ app.get('/api/febbox/id', async (req, res) => {
 // Get Febbox files
 app.get('/api/febbox/files', async (req, res) => {
     const { shareKey, parent_id = 0 } = req.query;
-    const cookie = req.headers['x-auth-cookie'];
+    const cookie = req.headers['x-auth-cookie'] || null;
     try {
-        const files = await febboxAPI._setAuthCookie(cookie).getFileList(shareKey, parent_id);
+        const files = await febboxAPI.getFileList(shareKey, parent_id , cookie);
         res.json(files);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -108,9 +108,9 @@ app.get('/api/febbox/files', async (req, res) => {
 // Get download links
 app.get('/api/febbox/links', async (req, res) => {
     const { shareKey, fid } = req.query;
-    const cookie = req.headers['x-auth-cookie'];
+    const cookie = req.headers['x-auth-cookie'] || null;
     try {
-        const links = await febboxAPI._setAuthCookie(cookie).getLinks(shareKey, fid);
+        const links = await febboxAPI.getLinks(shareKey, fid , cookie);
         res.json(links);
     } catch (error) {
         res.status(500).json({ error: error.message });

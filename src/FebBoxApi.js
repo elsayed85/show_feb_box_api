@@ -37,27 +37,32 @@ class FebboxAPI {
     }
 
     // Fetch JSON data from a URL
-    async _fetchJson(url) {
-        const response = await fetch(url, { headers: this.headers });
+    async _fetchJson(url, cookie = null) {
+        const headers = {
+            ...this.headers,
+            ...(cookie ? { cookie: `ui=${cookie}` } : {})
+        };
+
+        const response = await fetch(url, { headers });
         if (!response.ok) throw new Error(`Error fetching data from ${url}: ${response.statusText}`);
         return response.json();
     }
 
     // Get the list of files from a shared folder
-    async getFileList(shareKey, parentId = 0) {
+    async getFileList(shareKey, parentId = 0 , cookie = null) {
         const url = `${this.baseUrl}/file/file_share_list?share_key=${shareKey}&pwd=&parent_id=${parentId}&is_html=0`;
         this._setReferer(shareKey);
 
-        const data = await this._fetchJson(url);
+        const data = await this._fetchJson(url , cookie);
         return data.data.file_list;
     }
 
     // Get video file qualities and links from a shared video
-    async getLinks(shareKey, fid) {
+    async getLinks(shareKey, fid , cookie = null) {
         const url = `${this.baseUrl}/console/video_quality_list?fid=${fid}`;
         this._setReferer(shareKey);
 
-        const data = await this._fetchJson(url);
+        const data = await this._fetchJson(url, cookie);
         const htmlResponse = data.html;
 
         // Parse HTML response and extract file qualities
