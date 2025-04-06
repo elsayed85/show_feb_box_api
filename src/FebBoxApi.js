@@ -23,7 +23,7 @@ class FebboxAPI {
 
     // Helper method to create the referer header for each request
     _setReferer(shareKey) {
-        this.headers.referer = `https://www.febbox.com/share/${shareKey}`;
+        this.headers.referer = `${this.baseUrl}/share/${shareKey}`;
     }
 
     // Fetch JSON data from a URL
