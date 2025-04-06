@@ -10,6 +10,17 @@ class FebboxAPI {
     constructor() {
         this.baseUrl = 'https://www.febbox.com';
         this.headers = this._getDefaultHeaders();
+        this._setAuthCookie(FEBBOX_UI_COOKIE);
+    }
+
+    // Set the auth cookie for requests
+    _setAuthCookie(cookie) {
+        if (!cookie) {
+            return this;
+        }
+
+        this.headers.cookie = `ui=${cookie}`;
+        return this;
     }
 
     // Default headers used for all requests
@@ -17,7 +28,6 @@ class FebboxAPI {
         return {
             'x-requested-with': 'XMLHttpRequest',
             'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36',
-            'cookie': `ui=${FEBBOX_UI_COOKIE}`,
         };
     }
 

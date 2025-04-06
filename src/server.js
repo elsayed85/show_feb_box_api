@@ -17,7 +17,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Allow requests from any domain
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Allowed methods
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    
+
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
         return res.sendStatus(200);
@@ -40,9 +40,9 @@ app.get('/', (req, res) => {
 
 // Autocomplete endpoint
 app.get('/api/autocomplete', async (req, res) => {
-    const { keyword , pagelimit } = req.query;
+    const { keyword, pagelimit } = req.query;
     try {
-        const results = await showboxAPI.getAutocomplete(keyword , pagelimit);
+        const results = await showboxAPI.getAutocomplete(keyword, pagelimit);
         res.json(results);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -95,9 +95,10 @@ app.get('/api/febbox/id', async (req, res) => {
 
 // Get Febbox files
 app.get('/api/febbox/files', async (req, res) => {
-    const { shareKey , parent_id = 0 } = req.query;
+    const { shareKey, parent_id = 0 } = req.query;
+    const cookie = req.headers['X-Auth-Cookie'] || NULL;
     try {
-        const files = await febboxAPI.getFileList(shareKey, parent_id);
+        const files = await febboxAPI._setAuthCookie(cookie).getFileList(shareKey, parent_id);
         res.json(files);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -107,8 +108,9 @@ app.get('/api/febbox/files', async (req, res) => {
 // Get download links
 app.get('/api/febbox/links', async (req, res) => {
     const { shareKey, fid } = req.query;
+    const cookie = req.headers['X-Auth-Cookie'] || NULL;
     try {
-        const links = await febboxAPI.getLinks(shareKey, fid);
+        const links = await febboxAPI._setAuthCookie(cookie).getLinks(shareKey, fid);
         res.json(links);
     } catch (error) {
         res.status(500).json({ error: error.message });
